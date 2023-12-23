@@ -10,6 +10,8 @@ import (
 	"github.com/rafaelcx/wordle-app/internal/engine"
 	"github.com/rafaelcx/wordle-app/internal/file"
 	"github.com/rafaelcx/wordle-app/internal/message"
+	"github.com/rafaelcx/wordle-app/internal/morpher"
+	"github.com/rafaelcx/wordle-app/internal/validator"
 )
 
 func main() {
@@ -17,11 +19,19 @@ func main() {
 
 	const attemptTotal int = 6
 
-	var answer string = generateSolution()
+	var answer string = strings.ToUpper(generateSolution())
 	var history []string
 
 	for i := 1; i <= attemptTotal; i++ {
 		guess := getGuessInput()
+		guess = morpher.InputToUpperCase(guess)
+
+		err := validator.Validate(guess)
+		if err != nil {
+			fmt.Println(err.Error())
+			i--
+			continue
+		}
 
 		if guess == answer {
 			history = calculateStateAndAppendToHistory(guess, answer, history)
