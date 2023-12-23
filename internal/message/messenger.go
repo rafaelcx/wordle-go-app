@@ -15,16 +15,18 @@ func PrintGameOverMsg(answer string) {
 
 func PrintFailureMsg(history []string) {
 	fmt.Println("Incorrect - Your history:")
-
 	for i := 0; i < len(history); i++ {
 		fmt.Println(history[i])
 	}
 	fmt.Println()
 }
 
-func PrintSolvedMsg(attempts int) {
+func PrintSolvedMsg(attempts int, history []string) {
 	fmt.Println("\nSolved!!!")
-	fmt.Printf("And it only took you %v times, dummy", attempts)
+	for i := 0; i < len(history); i++ {
+		fmt.Println(history[i])
+	}
+	fmt.Printf("\nAnd it only took you %v times, dummy", attempts)
 }
 
 func PrintSolutionMsg(answer string) {

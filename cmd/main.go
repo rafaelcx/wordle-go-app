@@ -20,23 +20,16 @@ func main() {
 	var answer string = generateSolution()
 	var history []string
 
-	// message.PrintSolutionMsg(answer)
-
 	for i := 1; i <= attemptTotal; i++ {
 		guess := getGuessInput()
 
 		if guess == answer {
-			message.PrintSolvedMsg(i)
+			history = calculateStateAndAppendToHistory(guess, answer, history)
+			message.PrintSolvedMsg(i, history)
 			return
 		}
 
-		roundState := engine.CalculateState(guess, answer)
-		roundStateAsStr := ""
-		for k := 0; k < 5; k++ {
-			roundStateAsStr = roundStateAsStr + roundState[k]
-		}
-
-		history = append(history, roundStateAsStr)
+		history = calculateStateAndAppendToHistory(guess, answer, history)
 		message.PrintFailureMsg(history)
 	}
 	message.PrintGameOverMsg(answer)
@@ -54,4 +47,19 @@ func getGuessInput() string {
 	reader := bufio.NewReader(os.Stdin)
 	guess, _ := reader.ReadString('\n')
 	return strings.TrimSuffix(guess, "\n")
+}
+
+func formatRoundStateAsStr(roundState [5]string) string {
+	var roundStateAsStr string
+	for k := 0; k < len(roundState); k++ {
+		roundStateAsStr = roundStateAsStr + roundState[k]
+	}
+	return roundStateAsStr
+}
+
+func calculateStateAndAppendToHistory(guess, answer string, history []string) []string {
+	roundState := engine.CalculateState(guess, answer)
+	roundStateAsStr := formatRoundStateAsStr(roundState)
+	history = append(history, roundStateAsStr)
+	return history
 }
