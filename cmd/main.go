@@ -24,7 +24,7 @@ func main() {
 
 	for i := 1; i <= attemptTotal; i++ {
 		guess := getGuessInput()
-		guess = morpher.InputToUpperCase(guess)
+		guess = morpher.Morph(guess)
 
 		err := validator.Validate(guess)
 		if err != nil {

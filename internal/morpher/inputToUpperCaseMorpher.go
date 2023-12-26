@@ -2,6 +2,10 @@ package morpher
 
 import "strings"
 
-func InputToUpperCase(input string) string {
-	return strings.ToUpper(input)
+type inputToUpperCaseMorpher struct {
+	input string
+}
+
+func (m inputToUpperCaseMorpher) morph() string {
+	return strings.ToUpper(m.input)
 }
