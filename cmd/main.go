@@ -17,7 +17,6 @@ func main() {
 	for gameState.GetAttemptNumber() != 6 {
 		userInput, err := input.GetInput()
 		if err != nil {
-			fmt.Println(err.Error() + "\n")
 			continue
 		}
 
