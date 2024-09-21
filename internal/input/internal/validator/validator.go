@@ -20,5 +20,6 @@ func Validate(s string) error {
 func getValidatorList() []validator {
 	return []validator{
 		wordLengthValidator{},
+		wordExistenceValidator{},
 	}
 }
