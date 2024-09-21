@@ -4,11 +4,15 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
+	"github.com/rafaelcx/wordle-go-cli/internal/input/internal/sanitizer"
 )
 
 func GetInput() string {
 	fmt.Print("Enter your guess: ")
-	return getGuess()
+
+	guess := getGuess()
+	return sanitizer.Sanitize(guess)
 }
 
 func getGuess() string {
