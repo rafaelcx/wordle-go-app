@@ -15,7 +15,13 @@ func main() {
 	var gameState *game.Game = game.NewGame()
 
 	for gameState.GetAttemptNumber() != 6 {
-		gameState.SetCurrentGuess(input.GetInput())
+		userInput, err := input.GetInput()
+		if err != nil {
+			fmt.Println(err.Error() + "\n")
+			continue
+		}
+
+		gameState.SetCurrentGuess(userInput)
 	}
 
 	fmt.Println(gameState.GetGuessHistory())

@@ -6,13 +6,20 @@ import (
 	"os"
 
 	"github.com/rafaelcx/wordle-go-cli/internal/input/internal/sanitizer"
+	"github.com/rafaelcx/wordle-go-cli/internal/input/internal/validator"
 )
 
-func GetInput() string {
+func GetInput() (string, error) {
 	fmt.Print("Enter your guess: ")
 
 	guess := getGuess()
-	return sanitizer.Sanitize(guess)
+	guess = sanitizer.Sanitize(guess)
+
+	validationErr := validator.Validate(guess)
+	if validationErr != nil {
+		return "", validationErr
+	}
+	return guess, nil
 }
 
 func getGuess() string {
