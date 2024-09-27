@@ -1,6 +1,9 @@
 package state
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const cBlack string = "\033[0m"
 
@@ -22,6 +25,10 @@ func NewWord(s string) *Word {
 		letterValue: letterValueArray,
 		letterState: letterStateArray,
 	}
+}
+
+func (w *Word) AsString() string {
+	return strings.Join(w.letterValue, "")
 }
 
 func (w *Word) PrintAsString() {
