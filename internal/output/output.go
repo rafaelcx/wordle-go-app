@@ -12,6 +12,16 @@ func PrintIntro() {
 	fmt.Println(" ===========================================================\n ")
 }
 
+func PrintSolvedMsg() {
+	fmt.Println()
+	fmt.Println("Solved!!!")
+}
+
+func PrintGameOverMsg() {
+	fmt.Println()
+	fmt.Println("Game Over!!!")
+}
+
 func PrintGuessHistory(gameState *state.Game) {
 	guessHitory := gameState.GetGuessHistory()
 
