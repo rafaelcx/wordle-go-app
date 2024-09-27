@@ -1,18 +1,15 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/rafaelcx/wordle-go-cli/internal/game"
 	"github.com/rafaelcx/wordle-go-cli/internal/input"
+	"github.com/rafaelcx/wordle-go-cli/internal/output"
+	"github.com/rafaelcx/wordle-go-cli/internal/state"
 )
 
 func main() {
-	fmt.Println(" =========================================================== ")
-	fmt.Println(" WORDLE GAME MOCK - Play a horrible copy of Wordle for free! ")
-	fmt.Println(" ===========================================================\n ")
+	output.PrintIntro()
 
-	var gameState *game.Game = game.NewGame()
+	var gameState *state.Game = state.NewGame()
 
 	for gameState.GetAttemptNumber() != 6 {
 		userInput, err := input.GetInput()
@@ -20,8 +17,9 @@ func main() {
 			continue
 		}
 
-		gameState.SetCurrentGuess(userInput)
+		guess := state.NewWord(userInput)
+		gameState.SetCurrentGuess(guess)
 	}
 
-	fmt.Println(gameState.GetGuessHistory())
+	output.PrintGuessHistory(gameState)
 }
