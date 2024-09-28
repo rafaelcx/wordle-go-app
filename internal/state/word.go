@@ -4,10 +4,7 @@ import (
 	"strings"
 )
 
-const cRed string = "\033[31m"
-const cGreen string = "\033[32m"
-const cYellow string = "\033[33m"
-const cBlack string = "\033[0m"
+const WordSize = 5
 
 type Word struct {
 	LetterValue []string
@@ -22,7 +19,7 @@ func NewWord(s string) *Word {
 
 	for i, r := range s {
 		letterValueArray[i] = string(r)
-		letterStateArray[i] = cBlack
+		letterStateArray[i] = ColorBlack
 		letterCheckArray[i] = false
 	}
 
@@ -42,23 +39,23 @@ func (w *Word) ResetLetterCheck() {
 }
 
 func (w *Word) IsLetterStateCorrect(index int) bool {
-	return w.LetterState[index] == cGreen
+	return w.LetterState[index] == ColorGreen
 }
 
 func (w *Word) IsLetterStatePresent(index int) bool {
-	return w.LetterState[index] == cYellow
+	return w.LetterState[index] == ColorYellow
 }
 
 func (w *Word) SetLetterStateCorrect(index int) {
-	w.LetterState[index] = cGreen
+	w.LetterState[index] = ColorGreen
 }
 
 func (w *Word) SetLetterStatePresent(index int) {
-	w.LetterState[index] = cYellow
+	w.LetterState[index] = ColorYellow
 }
 
 func (w *Word) SetLetterStateWrong(index int) {
-	w.LetterState[index] = cRed
+	w.LetterState[index] = ColorRed
 }
 
 func (w *Word) SetLetterAsChecked(index int) {
