@@ -29,6 +29,7 @@ func PrintGuessHistory(gameState *state.Game) {
 		printWordAsString(word)
 		fmt.Println()
 	}
+	fmt.Println()
 }
 
 func printWordAsString(w *state.Word) {

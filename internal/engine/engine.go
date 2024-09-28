@@ -15,7 +15,7 @@ const maxRounds int = 6
 func Play(gameState *state.Game) {
 	output.PrintIntro()
 
-	answer := generateAnswer()
+	gameState.SetAnswer(generateAnswer())
 
 	for gameState.GetAttemptNumber() < maxRounds {
 		userInput, err := input.GetInput()
@@ -23,21 +23,23 @@ func Play(gameState *state.Game) {
 			continue
 		}
 
-		guess := state.NewWord(userInput)
-		gameState.SetCurrentGuess(guess)
+		gameState.SetCurrentGuess(state.NewWord(userInput))
 
-		if gameState.GetCurrentGuess().AsString() == answer {
+		if gameState.GetCurrentGuess().AsString() == gameState.GetAnswer().AsString() {
+			output.PrintGuessHistory(gameState)
 			output.PrintSolvedMsg()
-			break
+			return
 		}
+
+		output.PrintGuessHistory(gameState)
 	}
 
 	output.PrintGameOverMsg()
-	output.PrintGuessHistory(gameState)
 }
 
-func generateAnswer() string {
+func generateAnswer() *state.Word {
 	possibleAnswers := file.ParseAsSlice()
 	randomIndex := rand.Intn(len(possibleAnswers))
-	return strings.ToUpper(possibleAnswers[randomIndex])
+	answerAsStr := strings.ToUpper(possibleAnswers[randomIndex])
+	return state.NewWord(answerAsStr)
 }
