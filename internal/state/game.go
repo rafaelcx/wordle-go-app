@@ -5,10 +5,13 @@ type Game struct {
 	answer        *Word
 	currentGuess  *Word
 	guessHistory  []*Word
+	keyboard      *Keyboard
 }
 
 func NewGame() *Game {
-	return &Game{}
+	return &Game{
+		keyboard: NewKeyboard(),
+	}
 }
 
 func (g *Game) SetAnswer(answer *Word) {
@@ -35,4 +38,8 @@ func (g *Game) GetCurrentGuess() *Word {
 
 func (g *Game) GetGuessHistory() []*Word {
 	return g.guessHistory
+}
+
+func (g *Game) GetKeyboard() *Keyboard {
+	return g.keyboard
 }
