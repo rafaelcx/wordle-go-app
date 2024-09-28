@@ -1,15 +1,14 @@
 package state
 
 import (
-	"fmt"
 	"strings"
 )
 
 const cBlack string = "\033[0m"
 
 type Word struct {
-	letterValue []string
-	letterState []string
+	LetterValue []string
+	LetterState []string
 }
 
 func NewWord(s string) *Word {
@@ -22,17 +21,11 @@ func NewWord(s string) *Word {
 	}
 
 	return &Word{
-		letterValue: letterValueArray,
-		letterState: letterStateArray,
+		LetterValue: letterValueArray,
+		LetterState: letterStateArray,
 	}
 }
 
 func (w *Word) AsString() string {
-	return strings.Join(w.letterValue, "")
-}
-
-func (w *Word) PrintAsString() {
-	for index, value := range w.letterValue {
-		fmt.Print(w.letterState[index] + value + " ")
-	}
+	return strings.Join(w.LetterValue, "")
 }

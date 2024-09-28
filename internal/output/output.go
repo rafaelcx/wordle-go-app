@@ -25,8 +25,14 @@ func PrintGameOverMsg() {
 func PrintGuessHistory(gameState *state.Game) {
 	guessHitory := gameState.GetGuessHistory()
 
-	for _, value := range guessHitory {
-		value.PrintAsString()
+	for _, word := range guessHitory {
+		printWordAsString(word)
 		fmt.Println()
+	}
+}
+
+func printWordAsString(w *state.Word) {
+	for index, value := range w.LetterValue {
+		fmt.Print(w.LetterState[index] + value + " ")
 	}
 }
