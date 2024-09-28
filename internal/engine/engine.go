@@ -24,13 +24,13 @@ func Play(gameState *state.Game) {
 		}
 
 		gameState.SetCurrentGuess(state.NewWord(userInput))
+		performCheck(gameState)
 
-		if gameState.GetCurrentGuess().AsString() == gameState.GetAnswer().AsString() {
+		if isSolvedGame(gameState) {
 			output.PrintGuessHistory(gameState)
 			output.PrintSolvedMsg()
 			return
 		}
-
 		output.PrintGuessHistory(gameState)
 	}
 
@@ -42,4 +42,46 @@ func generateAnswer() *state.Word {
 	randomIndex := rand.Intn(len(possibleAnswers))
 	answerAsStr := strings.ToUpper(possibleAnswers[randomIndex])
 	return state.NewWord(answerAsStr)
+}
+
+func performCheck(gameState *state.Game) {
+	guess := gameState.GetCurrentGuess()
+	answer := gameState.GetAnswer()
+
+	for i := 0; i < len(guess.LetterValue); i++ {
+		for j := 0; j < len(answer.LetterValue); j++ {
+
+			lettersMatch := guess.LetterValue[i] == answer.LetterValue[j]
+
+			if lettersMatch && i == j && !answer.IsLetterChecked(j) && !guess.IsLetterChecked(i) {
+				guess.SetLetterStateCorrect(i)
+				guess.SetLetterAsChecked(i)
+				answer.SetLetterAsChecked(j)
+				continue
+			}
+
+			if lettersMatch && i != j && !answer.IsLetterChecked(j) && !guess.IsLetterChecked(i) {
+				guess.SetLetterStatePresent(i)
+				guess.SetLetterAsChecked(i)
+				answer.SetLetterAsChecked(j)
+				continue
+			}
+		}
+
+		if !guess.IsLetterStateCorrect(i) && !guess.IsLetterStatePresent(i) {
+			guess.SetLetterStateWrong(i)
+		}
+	}
+
+	guess.ResetLetterCheck()
+	answer.ResetLetterCheck()
+}
+
+func isSolvedGame(gameState *state.Game) bool {
+	for i := 0; i < 5; i++ {
+		if !gameState.GetCurrentGuess().IsLetterStateCorrect(i) {
+			return false
+		}
+	}
+	return true
 }
