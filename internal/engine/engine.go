@@ -37,13 +37,6 @@ func Play(gameState *state.Game) {
 	output.PrintGameOverMsg()
 }
 
-func generateAnswer() *state.Word {
-	possibleAnswers := file.ParseAsSlice()
-	randomIndex := rand.Intn(len(possibleAnswers))
-	answerAsStr := strings.ToUpper(possibleAnswers[randomIndex])
-	return state.NewWord(answerAsStr)
-}
-
 func performCheck(gameState *state.Game) {
 	guess := gameState.GetCurrentGuess()
 	answer := gameState.GetAnswer()
@@ -77,8 +70,15 @@ func performCheck(gameState *state.Game) {
 	answer.ResetLetterCheck()
 }
 
+func generateAnswer() *state.Word {
+	possibleAnswers := file.ParseAsSlice()
+	randomIndex := rand.Intn(len(possibleAnswers))
+	answerAsStr := strings.ToUpper(possibleAnswers[randomIndex])
+	return state.NewWord(answerAsStr)
+}
+
 func isSolvedGame(gameState *state.Game) bool {
-	for i := 0; i < 5; i++ {
+	for i := 0; i < state.WordSize; i++ {
 		if !gameState.GetCurrentGuess().IsLetterStateCorrect(i) {
 			return false
 		}
