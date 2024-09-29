@@ -35,6 +35,22 @@ func PrintGuessHistory(gameState *state.Game) {
 	fmt.Println(state.ColorBlack)
 }
 
+func PrintKeyboard(gameState *state.Game) {
+	fmt.Println("Keyboard state:")
+	fmt.Println()
+
+	keyboard := gameState.GetKeyboard()
+	for i, letter := range keyboard.Order {
+		fmt.Print(keyboard.Letters[letter] + letter + " ")
+		if i == 10 || i == 19 {
+			fmt.Println()
+		}
+	}
+
+	fmt.Println(state.ColorBlack)
+	fmt.Println()
+}
+
 func printWordAsString(w *state.Word) {
 	for index, value := range w.LetterValue {
 		fmt.Print(w.LetterState[index] + value + " ")

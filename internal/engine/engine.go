@@ -32,6 +32,7 @@ func Play(gameState *state.Game) {
 			return
 		}
 		output.PrintGuessHistory(gameState)
+		output.PrintKeyboard(gameState)
 	}
 
 	output.PrintGameOverMsg()
@@ -65,9 +66,9 @@ func performCheck(gameState *state.Game) {
 			guess.SetLetterStateWrong(i)
 		}
 	}
-
 	guess.ResetLetterCheck()
 	answer.ResetLetterCheck()
+	updateKeyboardState(gameState)
 }
 
 func generateAnswer() *state.Word {
@@ -84,4 +85,15 @@ func isSolvedGame(gameState *state.Game) bool {
 		}
 	}
 	return true
+}
+
+func updateKeyboardState(gameState *state.Game) {
+	for i := 0; i < state.WordSize; i++ {
+		guessLetter := gameState.GetCurrentGuess().LetterValue[i]
+		guessLetterColor := gameState.GetCurrentGuess().LetterState[i]
+
+		if gameState.GetKeyboard().Letters[guessLetter] == state.ColorBlack {
+			gameState.GetKeyboard().Letters[guessLetter] = guessLetterColor
+		}
+	}
 }
