@@ -18,9 +18,10 @@ func PrintSolvedMsg() {
 	fmt.Println()
 }
 
-func PrintGameOverMsg() {
+func PrintGameOverMsg(gameState *state.Game) {
 	fmt.Println()
 	fmt.Println("Game Over!!!")
+	fmt.Println("The asnwer was: " + gameState.GetAnswer().AsString())
 	fmt.Println()
 }
 
