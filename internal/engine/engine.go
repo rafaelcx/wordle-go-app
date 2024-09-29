@@ -35,7 +35,7 @@ func Play(gameState *state.Game) {
 		output.PrintKeyboard(gameState)
 	}
 
-	output.PrintGameOverMsg()
+	output.PrintGameOverMsg(gameState)
 }
 
 func performCheck(gameState *state.Game) {
