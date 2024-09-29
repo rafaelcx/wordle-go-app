@@ -19,7 +19,7 @@ To run the Wordle game, you'll need to have Go (Golang) installed on your machin
 
 2. **Clone the Repository**:
    ```bash
-   git clone git@github.com:rafaelcx/wordle-go-cli.git
+   git clone git@github.com:rafaelcx/wordle-go-app.git
    cd wordle-go-cli
 
 3. **Run the Game:**
